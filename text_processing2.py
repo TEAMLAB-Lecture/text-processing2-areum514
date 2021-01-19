@@ -1,7 +1,7 @@
 #######################
 # Test Processing II  #
 #######################
-
+import re
 
 def digits_to_words(input_string):
     """
@@ -28,7 +28,27 @@ def digits_to_words(input_string):
             >>> tp2.digits_to_words(digits_str2)
             'three one four one five'
     """
-    digit_string = None
+    switcher={
+        '0':'zero',
+        '1':'one',
+        '2':'two',
+        '3':'three',
+        '4':'four',
+        '5':'five',
+        '6':'six',
+        '7':'seven',
+        '8':'eight',
+        '9':'nine',
+        
+    }
+    digit_string=""
+
+    for x in input_string:
+        if x.isdecimal():
+            digit_string+=switcher[x]
+            digit_string+=' '
+    
+    digit_string=digit_string.rstrip()
     return digit_string
 
 
@@ -64,5 +84,22 @@ def to_camel_case(underscore_str):
             >>> tp2.to_camel_case(underscore_str3)
             "alreadyCamel"
     """
-    camelcase_str = None
+    camelcase_str=""
+    if '_' in underscore_str:
+        underscore_str=underscore_str.replace('_',' ').split(' ')
+        underscore_str=list(filter(lambda x: x not in " ",underscore_str))
+
+        if len(underscore_str)==0:
+            camelcase_str=""
+        elif len(underscore_str)==1:
+            camelcase_str=underscore_str[0]
+        else:
+            underscore_str=[x.title() for x in underscore_str]
+            for x in underscore_str:
+                camelcase_str+=x
+            camelcase_str=camelcase_str[0].lower()+camelcase_str[1:]
+    else:
+        camelcase_str=underscore_str
     return camelcase_str
+test_str = "__EXAMPLE__NAME__"
+print(to_camel_case(test_str))
